@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{template "head.html" .}}
+</head>
+<body>
+	<h1>{{.Title}}</h1>
+	<p>this <em>client</em> step:</p>
+	<ol>
+		<li>found the TPM Endorsement Key (EK) Certificate.</li>
+		<li>generated an Attestation Key (AK).</li>
+		<li>generated the AK Attestation Parameters.</li>
+		<li>will send the AK Attestation Parameters and the EK Certificate to the server.</li>
+	</ol>
+	<div>
+		<form id="response" action="{{.ServerBaseAddress}}/remote-attestation/start">
+			<input type="hidden" name="attestation-data" value="{{.AttestationData}}">
+			<input type="hidden" name="challenge-address" value="{{.ClientBaseAddress}}/remote-attestation/challenge">
+			<input type="submit" value="Continue">
+		</form>
+	</div>
+	<script>
+		//document.getElementById("response").submit();
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{template "head.html" .}}
+</head>
+<body>
+	<div>
+		<form action="remote-attestation/start">
+			<input type="submit" value="Start Remote Attestation">
+		</form>
+	</div>
+	<table>
+		<caption>TPM Endorsement Keys (EKs)</caption>
+		<tbody>
+			{{- range .TPMEndorsementKeys}}
+			<tr>
+				<th>{{.Name}}</th>
+				<td><pre>{{.Value}}</pre></td>
+			</tr>
+			{{- end}}
+		</tbody>
+	</table>
+	<table>
+		<caption>SWTPM LocalCA Certificates</caption>
+		<tbody>
+			{{- range .SWTPMCertificates}}
+			<tr>
+				<th>{{.Name}}</th>
+				<td><pre>{{.Value}}</pre></td>
+			</tr>
+			{{- end}}
+		</tbody>
+	</table>
+</body>
+</html>

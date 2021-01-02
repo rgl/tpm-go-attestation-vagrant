@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{template "head.html" .}}
+</head>
+<body>
+	<h1>{{.Title}}</h1>
+	<p>this <em>client</em> step:</p>
+	<ol>
+		<li>successfully decrypted the Attestation Challenge sent by the server.</li>
+		<li>will send the decrypted Attestation Challenge Secret to the server.</li>
+	</ol>
+	<div>
+		<form id="response" action="{{.ServerSecretAddress}}">
+			<input type="hidden" name="attestation-challenge-response" value="{{.AttestationChallengeResponse}}">
+			<input type="submit" value="Continue">
+		</form>
+	</div>
+	<script>
+		//document.getElementById("response").submit();
+	</script>
+</body>
+</html>

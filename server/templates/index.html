@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{template "head.html" .}}
+</head>
+<body>
+	<h1>Clients</h1>
+	<ul>
+		{{- range .ClientBaseAddresses}}
+		<li><a href="{{.}}">{{.}}</a></li>
+		{{- end}}
+	</ul>
+</body>
+</html>

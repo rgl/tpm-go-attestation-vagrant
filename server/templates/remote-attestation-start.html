@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{template "head.html" .}}
+</head>
+<body>
+	<h1>{{.Title}}</h1>
+	<p>this <em>server</em> step:</p>
+	<ol>
+		<li>
+			did <em>NOT verify</em> that it can trust the received Endorsement Key (EK) Certificate (not yet implemented)
+			<ul>
+				<li>Subject: {{.EKSubject}}</li>
+				<li>Issuer: {{.EKIssuer}}</li>
+			</ul>
+		</li>
+		<li>generated the Attestation Challenge</li>
+		<li>will send the Attestation Challenge to the client</li>
+	</ol>
+	<div>
+		<form id="response" action="{{.ClientChallengeAddress}}">
+			<input type="hidden" name="attestation-challenge" value="{{.AttestationChallenge}}">
+			<input type="hidden" name="attestation-secret-address" value="{{.ServerBaseAddress}}/remote-attestation/secret">
+			<input type="submit" value="Continue">
+		</form>
+	</div>
+	<div>
+		<h1>Client Endorsement Key (EK)</h1>
+		<pre>{{.EK}}</pre>
+	</div>
+	<script>
+		//document.getElementById("response").submit();
+	</script>
+</body>
+</html>
