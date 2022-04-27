@@ -10,9 +10,9 @@ docker build -t client .
 #       /sys/class/tpm
 #       /sys/kernel/security/tpm0/binary_bios_measurements
 #       /dev/tpmrm0
-# see https://github.com/google/go-attestation/blob/v0.2.2/attest/tpm_linux.go#L32
-# see https://github.com/google/go-attestation/blob/v0.2.2/attest/tpm_linux.go#L82-L85
-# see https://github.com/google/go-attestation/blob/v0.2.2/attest/tpm_linux.go#L106
+# see https://github.com/google/go-attestation/blob/v0.4.3/attest/tpm_linux.go#L33
+# see https://github.com/google/go-attestation/blob/v0.4.3/attest/tpm_linux.go#L83-L86
+# see https://github.com/google/go-attestation/blob/v0.4.3/attest/tpm_linux.go#L107
 docker rm --force client || true
 docker run \
     --name client \

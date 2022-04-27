@@ -41,7 +41,7 @@ Then click the "Start Remote Attestation" button to go through the remote attest
 # References
 
 * [Go-Attestation library](https://github.com/google/go-attestation)
-  * [attest-tool self-test](https://github.com/google/go-attestation/blob/v0.2.2/attest/attest-tool/attest-tool.go#L119-L132)
+  * [attest-tool self-test](https://github.com/google/go-attestation/blob/v0.4.3/attest/attest-tool/attest-tool.go#L119-L132)
 * [Remote Attestation with TPM (in the context of SPIRE)](https://github.com/bloomberg/spire-tpm-plugin/blob/master/TPM.md)
 * [Remote Attestation With TPM2 Tools](https://tpm2-software.github.io/2020/06/12/Remote-Attestation-With-tpm2-tools.html)
 * [tpm-js (experiment with a software Trusted Platform Module (TPM) in your browser)](https://google.github.io/tpm-js/)
