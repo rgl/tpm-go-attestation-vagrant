@@ -5,6 +5,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"embed"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -20,7 +21,11 @@ import (
 	"github.com/google/go-attestation/attest"
 )
 
-var templates = template.Must(template.ParseGlob("templates/*"))
+var (
+	//go:embed templates/*
+	templateFiles embed.FS
+	templates     *template.Template
+)
 
 type indexData struct {
 	Title               string
@@ -192,6 +197,8 @@ func main() {
 		flag.Usage()
 		log.Fatalf("\nYou MUST NOT pass any positional arguments")
 	}
+
+	templates = template.Must(template.ParseFS(templateFiles, "templates/*"))
 
 	// this AEAD AES key is used to seal state data that we send to the
 	// client (because HTTP is stateless).

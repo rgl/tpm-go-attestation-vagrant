@@ -5,6 +5,7 @@ COPY go.* ./
 RUN go mod download
 RUN go install github.com/google/go-attestation/attest/attest-tool
 COPY *.go ./
+COPY templates templates
 RUN CGO_ENABLED=0 go build -ldflags="-s"
 
 FROM debian:bullseye-slim
@@ -13,5 +14,4 @@ RUN apt-get update && apt-get install -y libtspi1 openssl
 WORKDIR /app
 COPY --from=builder $HOME/go/bin/attest-tool /usr/local/bin/
 COPY --from=builder /app/client ./
-COPY templates ./templates
 ENTRYPOINT ["/app/client"]
