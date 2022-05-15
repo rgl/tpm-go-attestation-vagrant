@@ -274,7 +274,7 @@ func main() {
 		}
 
 		err = templates.ExecuteTemplate(w, "remote-attestation-start.html", remoteAttestationStartData{
-			Title:                  fmt.Sprintf("%s: Start Remote Attestation Challenge", os.Getenv("APP_NAME")),
+			Title:                  fmt.Sprintf("@%s: Start Remote Attestation Challenge", os.Getenv("APP_NAME")),
 			ServerBaseAddress:      os.Getenv("SERVER_BASE_ADDRESS"),
 			ClientChallengeAddress: r.FormValue("challenge-address"),
 			AttestationChallenge:   string(attestationChallengeBytes),
@@ -333,7 +333,7 @@ func main() {
 		}
 
 		err = templates.ExecuteTemplate(w, "remote-attestation-secret.html", remoteAttestationValidationResultData{
-			Title:     fmt.Sprintf("%s: Remote Attestation Succeeded", os.Getenv("APP_NAME")),
+			Title:     fmt.Sprintf("@%s: Remote Attestation Succeeded", os.Getenv("APP_NAME")),
 			EK:        ekCertificateText,
 			EKSubject: ekCertificate.Subject.String(),
 			EKIssuer:  ekCertificate.Issuer.String(),
@@ -349,7 +349,7 @@ func main() {
 		log.Printf("%s", dump)
 
 		err := templates.ExecuteTemplate(w, "index.html", indexData{
-			Title:               os.Getenv("APP_NAME"),
+			Title:               fmt.Sprintf("@%s", os.Getenv("APP_NAME")),
 			ClientBaseAddresses: strings.Split(os.Getenv("CLIENT_BASE_ADDRESSES"), ","),
 		})
 		if err != nil {

@@ -323,7 +323,7 @@ func main() {
 		}
 
 		err = templates.ExecuteTemplate(w, "remote-attestation-start.html", remoteAttestationStartData{
-			Title:             fmt.Sprintf("%s: Start Remote Attestation", os.Getenv("APP_NAME")),
+			Title:             fmt.Sprintf("@%s: Start Remote Attestation", os.Getenv("APP_NAME")),
 			ServerBaseAddress: os.Getenv("SERVER_BASE_ADDRESS"),
 			ClientBaseAddress: os.Getenv("CLIENT_BASE_ADDRESS"),
 			AttestationData:   string(attestationDataBytes),
@@ -368,7 +368,7 @@ func main() {
 		}
 
 		err = templates.ExecuteTemplate(w, "remote-attestation-challenge.html", remoteAttestationChallengeData{
-			Title:                        fmt.Sprintf("%s: Reply to Remote Attestation Challenge", os.Getenv("APP_NAME")),
+			Title:                        fmt.Sprintf("@%s: Reply to Remote Attestation Challenge", os.Getenv("APP_NAME")),
 			ServerSecretAddress:          r.FormValue("attestation-secret-address"),
 			AttestationChallengeResponse: string(attestationChallengeResponseBytes),
 		})
@@ -383,7 +383,7 @@ func main() {
 		log.Printf("%s", dump)
 
 		err := templates.ExecuteTemplate(w, "index.html", indexData{
-			Title:              os.Getenv("APP_NAME"),
+			Title:              fmt.Sprintf("@%s", os.Getenv("APP_NAME")),
 			ServerBaseAddress:  os.Getenv("SERVER_BASE_ADDRESS"),
 			ClientBaseAddress:  os.Getenv("CLIENT_BASE_ADDRESS"),
 			SWTPMCertificates:  getSWTPMCertificates(),
