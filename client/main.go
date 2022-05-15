@@ -6,6 +6,7 @@ import (
 	"crypto/rand"
 	"embed"
 	"encoding/json"
+	"encoding/pem"
 	"flag"
 	"fmt"
 	"html/template"
@@ -173,7 +174,9 @@ func getTPMEndorsementKeys() []nameValuePair {
 		name := fmt.Sprintf("EK #%d", i)
 		value, err := getCertificateText(ek.Certificate.Raw)
 		if err != nil {
-			value = fmt.Sprintf("ERROR: %v", err)
+			value = fmt.Sprintf("ERROR: %v\n%s",
+				err,
+				pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: ek.Certificate.Raw}))
 		}
 		result = append(result, nameValuePair{name, string(value)})
 	}
