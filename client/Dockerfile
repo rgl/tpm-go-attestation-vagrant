@@ -1,4 +1,4 @@
-FROM golang:1.18.1-bullseye as builder
+FROM golang:1.18.2-bullseye as builder
 WORKDIR /app
 RUN apt-get update && apt-get install -y libtspi-dev
 COPY go.* ./
