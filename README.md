@@ -2,15 +2,19 @@
 
 Install the [Ubuntu 20.04 UEFI vagrant box](https://github.com/rgl/ubuntu-vagrant).
 
+Install the [Windows 2022 UEFI vagrant box](https://github.com/rgl/windows-vagrant).
+
 Install the [swtpm](https://github.com/stefanberger/swtpm) packages as described in [swtpm-vagrant](https://github.com/rgl/swtpm-vagrant).
 
 Start the environment then do a self-test attestation:
 
 ```bash
-# start the environment.
-time vagrant up --provider=libvirt --no-destroy-on-error --no-tty
+# start the server.
+time vagrant up --provider=libvirt --no-destroy-on-error --no-tty server
+# start the ubuntu client.
+time vagrant up --provider=libvirt --no-destroy-on-error --no-tty client0
 # enter the envirment.
-vagrant ssh client1
+vagrant ssh client0
 # switch to root.
 sudo -i
 # show information about the tpm.
@@ -25,11 +29,14 @@ attest-tool list-eks | openssl x509 -noout -text
 attest-tool self-test
 ```
 
-Access the client1 Web UI:
+Access the `server` page to see the known clients:
 
-  http://10.11.0.201:9000
+  http://10.11.0.101:8000
 
-Then click the "Start Remote Attestation" button to go through the remote attestation steps.
+Click one of the clients to go to its Remove Attestation page.
+
+Click the "Start Remote Attestation" button and go through the remote attestation steps.
+
 
 # Real-World Projects
 

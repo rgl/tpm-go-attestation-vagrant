@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/google/go-attestation/attest"
@@ -119,16 +118,6 @@ func unseal(key []byte, data []byte) ([]byte, error) {
 	}
 
 	return aead.Open(nil, seal.Nonce, seal.Ciphertext, nil)
-}
-
-func getCertificateText(der []byte) (string, error) {
-	cmd := exec.Command("openssl", "x509", "-text", "-inform", "der")
-	cmd.Stdin = bytes.NewReader(der)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return "", err
-	}
-	return string(output), nil
 }
 
 func generateAttestationChallenge(sealKey []byte, attestationData *AttestationData) (*AttestationChallenge, error) {

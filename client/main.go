@@ -140,17 +140,7 @@ func getCertificateFileText(path string) (string, error) {
 	cmd := exec.Command("openssl", "x509", "-text", "-in", path)
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return "", err
-	}
-	return string(output), nil
-}
-
-func getCertificateText(der []byte) (string, error) {
-	cmd := exec.Command("openssl", "x509", "-text", "-inform", "der")
-	cmd.Stdin = bytes.NewReader(der)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to execute openssl: %w\n%s", err, output)
 	}
 	return string(output), nil
 }
