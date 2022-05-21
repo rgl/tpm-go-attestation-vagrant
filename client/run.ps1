@@ -4,7 +4,7 @@ param(
 )
 
 # install service dependencies.
-choco install -y nssm carbon openssl.light
+choco install -y nssm carbon
 Import-Module Carbon
 
 # install go.

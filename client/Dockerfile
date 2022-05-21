@@ -10,7 +10,7 @@ RUN CGO_ENABLED=0 go build -ldflags="-s"
 
 FROM debian:bullseye-slim
 EXPOSE 9000
-RUN apt-get update && apt-get install -y libtspi1 openssl
+RUN apt-get update && apt-get install -y libtspi1
 WORKDIR /app
 COPY --from=builder $HOME/go/bin/attest-tool /usr/local/bin/
 COPY --from=builder /app/client ./

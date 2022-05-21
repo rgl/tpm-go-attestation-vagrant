@@ -5,8 +5,10 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"crypto/x509"
 	"embed"
 	"encoding/json"
+	"encoding/pem"
 	"flag"
 	"fmt"
 	"html/template"
@@ -18,6 +20,7 @@ import (
 	"strings"
 
 	"github.com/google/go-attestation/attest"
+	"github.com/smallstep/certinfo"
 )
 
 var (
@@ -173,6 +176,19 @@ func validateAttestationChallengeResponse(sealKey []byte, attestationChallengeRe
 	}
 
 	return attestationChallengeContext.EK, nil
+}
+
+func getCertificateText(der []byte) (string, error) {
+	crt, err := x509.ParseCertificate(der)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse certificate: %w", err)
+	}
+	text, err := certinfo.CertificateText(crt)
+	if err != nil {
+		return "", fmt.Errorf("failed to convert certificate to text: %w", err)
+	}
+	pemCrt := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: der})
+	return text + string(pemCrt), nil
 }
 
 func main() {

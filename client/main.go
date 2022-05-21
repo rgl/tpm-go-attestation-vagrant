@@ -4,6 +4,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"crypto/x509"
 	"embed"
 	"encoding/json"
 	"encoding/pem"
@@ -15,12 +16,12 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 
 	"github.com/google/go-attestation/attest"
+	"github.com/smallstep/certinfo"
 )
 
 var (
@@ -137,12 +138,28 @@ func unseal(key []byte, data []byte) ([]byte, error) {
 }
 
 func getCertificateFileText(path string) (string, error) {
-	cmd := exec.Command("openssl", "x509", "-text", "-in", path)
-	output, err := cmd.CombinedOutput()
+	pemCrt, err := os.ReadFile(path)
 	if err != nil {
-		return "", fmt.Errorf("failed to execute openssl: %w\n%s", err, output)
+		return "", fmt.Errorf("failed to open file %s: %w", path, err)
 	}
-	return string(output), nil
+	block, _ := pem.Decode([]byte(pemCrt))
+	if block == nil {
+		return "", fmt.Errorf("failed to decode pem from file %s", path)
+	}
+	return getCertificateText(block.Bytes)
+}
+
+func getCertificateText(der []byte) (string, error) {
+	crt, err := x509.ParseCertificate(der)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse certificate: %w", err)
+	}
+	text, err := certinfo.CertificateText(crt)
+	if err != nil {
+		return "", fmt.Errorf("failed to convert certificate to text: %w", err)
+	}
+	pemCrt := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: der})
+	return text + string(pemCrt), nil
 }
 
 func getTPMEndorsementKeys() []nameValuePair {
